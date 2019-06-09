@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'MyHomePage/MyHomePage.dart';
 import 'MyHomePage/Page2.dart';
+import 'MyHomePage/Page3.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context){return MyHomePage(title: 'home组件');}, // 定义路由语法方式，注意分号添加
         '/page2': (context){return Page2();}, // 定义路由语法方式，注意分号添加
+        '/page3': (context){return Page3(textData: null,);}, // 定义路由语法方式，注意分号添加
       },
       initialRoute: '/', // 默认显示哪个路由地址
     );

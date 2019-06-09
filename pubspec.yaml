@@ -24,6 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   # 这里就是添加第三方插件的地方
   cupertino_icons: ^0.1.2
+  sqflite: ^1.1.5
   http: ^0.12.0+2
 
 dev_dependencies:
@@ -59,16 +60,16 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
-  #     fonts:
+  #   - family: Schyler # 字体的别名，后续使用它读取字体库
+  #     fonts: #以下配置字体库相关路径
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
+  #   - family: Trajan Pro # 配置第二款字体库名称，及配置
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  #         weight: 700 # 指定字体粗细
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
