@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/routes/index.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'routes/onGenerateRoute.dart';
+import 'routes/routesInit.dart'; // 路由配置
+import 'stores/counterStore/counterStore.dart'; // mobx共享的数据类
+import 'stores/themeStore/themeStore.dart'; // 全局主题
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MultiProvider(
+    providers: [
+      // 每一个共享的store类...
+      Provider<ThemeStore>.value(value: ThemeStore()),
+      Provider<CounterStore>(builder: (_) => CounterStore()),
+    ],
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo2',
-      // 模板风格
-      theme: ThemeData(
-        primarySwatch: Colors.blue, // 顶部和一些工具都变成了蓝色风格
+    final theme = Provider.of<ThemeStore>(context);
+    return Observer(
+      name: 'theme', // 定义观察者名称
+      builder: (_) => MaterialApp(
+        theme: theme.getTheme,
+        initialRoute: initialRoute,
+        // 全局统一获取路由传递的参数
+        onGenerateRoute: onGenerateRoute,
+        debugShowCheckedModeBanner: false,
       ),
-      // home: MyHomePage(title: 'Flutter标题'), // APP页面标题，使用了另一个组件MyHomePage
-      // home: Myapp(), // 显示带底部bar图标的
-      // 设置路由，
-      routes: routesInit, // 方式二：抽离路由组件
-      // routes: {
-      //   '/': (context) {
-      //     return MyHomePage(title: 'home组件');
-      //   }, // 定义路由语法方式，注意分号添加
-      //   '/page2': (context) {
-      //     return Page2();
-      //   }, // 定义路由语法方式，注意分号添加
-      //   '/page3': (context) {
-      //     return Page3(
-      //       textData: null,
-      //     );
-      //   }, // 定义路由语法方式，注意分号添加
-      // },
-      initialRoute: initialRoute, // 默认显示哪个路由地址
     );
   }
 }
