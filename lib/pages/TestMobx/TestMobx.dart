@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'package:flexible/model/counterStore/counterStore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:flexible/stores/counterStore/counterStore.dart'; // 状态管理
 
 class TestMobx extends StatefulWidget {
   TestMobx({Key key, this.params}) : super(key: key);

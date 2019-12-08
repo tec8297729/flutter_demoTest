@@ -1,8 +1,7 @@
+import 'package:flexible/components/IntroduceBtn/IntroduceBtn.dart';
+import 'package:flexible/model/counterStore/counterStore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:flexible/utils/dio/safeRequest.dart'; // 请求底层
-import 'package:flexible/stores/counterStore/counterStore.dart'; // 状态管理
 
 class Home extends StatefulWidget {
   Home({Key key, this.params}) : super(key: key);
@@ -22,11 +21,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   void _incrementCounter() {
     _counter.increment(); // mobx中的值 加加value
-
-    // 请求组件使用，同dio组件request方法
-    // safeRequest('http://yapi.demo.qunar.com/mock/1311/data').then((res) {
-    //   print(res['num']);
-    // });
   }
 
   @override
@@ -42,7 +36,15 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         padding: EdgeInsets.all(20),
         child: ListView(
           children: <Widget>[
-            btnWidget("底部栏带动画效果", "/extendedNavBar"),
+            IntroduceBtn(
+              btnText: "底部栏带动画效果",
+              routeName: "/extendedNavBar",
+            ),
+            IntroduceBtn(
+              text: '''从顶部tabs切换开始，每个页面内在内置嵌套多个tabs，每个tabs都是自定义显示内容区域''',
+              btnText: "tabs嵌套多层级",
+              routeName: "/tabsNContext",
+            ),
           ],
         ),
       ),
@@ -50,18 +52,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget btnWidget(String text, String routeName) {
-    return Container(
-      alignment: Alignment.center,
-      child: RaisedButton(
-        child: Text(text),
-        onPressed: () {
-          Navigator.pushNamed(context, routeName);
-        },
       ),
     );
   }
