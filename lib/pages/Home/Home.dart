@@ -45,6 +45,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               btnText: "tabs嵌套多层级",
               routeName: "/tabsNContext",
             ),
+            IntroduceBtn(
+              text: '''默认顶部显示tabBar后，当滚动视图区域时，可滚动置顶AppBar组件，并且可支持多个。''',
+              btnText: "tabBar滚动置顶多个",
+              routeName: "/fixedAppBar",
+            ),
           ],
         ),
       ),
