@@ -1,6 +1,7 @@
 import 'package:flexible/pages/DemoBar/ExtendedNavBar/ExtendedNavBar.dart';
 import 'package:flexible/pages/DemoBar/TabsNContext/TabsNContext.dart';
 import 'package:flexible/pages/BarTabs/BarTabs.dart';
+import 'package:flexible/pages/DemoOther/AccountPage/AccountPage.dart';
 import 'package:flexible/pages/DemoSliver/FixedAppBar/FixedAppBar.dart';
 import 'package:flexible/pages/TestMobx/TestMobx.dart';
 import 'package:flutter/material.dart';
@@ -12,5 +13,6 @@ final Map<String, WidgetBuilder> routesInit = {
   '/extendedNavBar': (BuildContext context, {params}) => ExtendedNavBar(),
   '/tabsNContext': (BuildContext context, {params}) => TabsNContext(),
   '/fixedAppBar': (BuildContext context, {params}) => FixedAppBar(),
+  '/accountPage': (BuildContext context, {params}) => AccountPage(),
   '/testMobx': (BuildContext context, {params}) => TestMobx(params: params),
 };

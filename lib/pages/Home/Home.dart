@@ -50,6 +50,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               btnText: "tabBar滚动置顶多个",
               routeName: "/fixedAppBar",
             ),
+            IntroduceBtn(
+              // text: ''' ''',
+              btnText: "step步进器",
+              routeName: "/accountPage",
+            ),
           ],
         ),
       ),
