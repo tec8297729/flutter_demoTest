@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flexible/model/counterStore/counterStore.dart';
+import 'package:flexible/routes/routerName.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class _TestMobxState extends State<TestMobx> {
       _timer = null; // 清空
     }
     _timer = Timer(Duration(seconds: 2), () {
-      Navigator.pushNamed(context, '/', arguments: {'pageId': 1});
+      Navigator.pushNamed(context, RouterName.home, arguments: {'pageId': 1});
     });
   }
 

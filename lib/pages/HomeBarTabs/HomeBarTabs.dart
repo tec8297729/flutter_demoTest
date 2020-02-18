@@ -1,27 +1,29 @@
-import 'package:flexible/pages/MyPersonal/MyPersonal.dart';
-import 'package:flexible/pages/Search/Search.dart';
 import 'package:flutter/material.dart';
 import '../../components/TipsExitAnimated/TipsExitAnimated.dart';
-import '../Hot/Hot.dart';
-import '../Home/Home.dart';
+
+import 'Home/Home.dart';
+import 'Hot/Hot.dart';
+import 'MyPersonal/MyPersonal.dart';
+import 'Search/Search.dart';
 
 class Params {
   int pageId;
 }
 
-class BarTabs extends StatefulWidget {
+class HomeBarTabs extends StatefulWidget {
   final params;
 
-  BarTabs({
+  HomeBarTabs({
     Key key,
     this.params,
   }) : super(key: key);
 
   @override
-  _BarTabsState createState() => _BarTabsState();
+  _HomeBarTabsState createState() => _HomeBarTabsState();
 }
 
-class _BarTabsState extends State<BarTabs> with SingleTickerProviderStateMixin {
+class _HomeBarTabsState extends State<HomeBarTabs>
+    with SingleTickerProviderStateMixin {
   int currentIndex = 0; // 接收bar当前点击索引
   PageController pageController;
 

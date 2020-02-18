@@ -1,5 +1,6 @@
 import 'package:flexible/components/IntroduceBtn/IntroduceBtn.dart';
 import 'package:flexible/model/counterStore/counterStore.dart';
+import 'package:flexible/routes/routerName.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,22 +39,27 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           children: <Widget>[
             IntroduceBtn(
               btnText: "底部栏带动画效果",
-              routeName: "/extendedNavBar",
+              routeName: RouterName.extendedNavBar,
             ),
             IntroduceBtn(
               text: '''从顶部tabs切换开始，每个页面内在内置嵌套多个tabs，每个tabs都是自定义显示内容区域''',
               btnText: "tabs嵌套多层级",
-              routeName: "/tabsNContext",
+              routeName: RouterName.tabsNContext,
             ),
             IntroduceBtn(
               text: '''默认顶部显示tabBar后，当滚动视图区域时，可滚动置顶AppBar组件，并且可支持多个。''',
-              btnText: "tabBar滚动置顶多个",
-              routeName: "/fixedAppBar",
+              btnText: "滚动置顶组件",
+              routeName: RouterName.fixedAppBar,
+            ),
+            IntroduceBtn(
+              text: '''自定义下拉菜单组件，可以放任意自由的组件''',
+              btnText: "下拉菜单按钮",
+              routeName: RouterName.customPoup,
             ),
             IntroduceBtn(
               // text: ''' ''',
               btnText: "step步进器",
-              routeName: "/accountPage",
+              routeName: RouterName.accountPage,
             ),
           ],
         ),

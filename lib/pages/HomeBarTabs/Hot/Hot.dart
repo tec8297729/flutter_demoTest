@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flexible/model/counterStore/counterStore.dart';
+import 'package:flexible/routes/routerName.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class _HotState extends State<Hot> {
     try {
       _timer = Timer(Duration(seconds: 3), () {
         print('定时器');
-        Navigator.pushNamed(context, '/', arguments: {'pageId': 5});
+        Navigator.pushNamed(context, RouterName.home, arguments: {'pageId': 5});
       });
     } catch (e) {}
   }
