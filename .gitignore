@@ -8,12 +8,15 @@
 .buildlog/
 .history
 .svn/
+.vscode/
+.metadata
 
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
 .idea/
+pubspec.lock
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -28,6 +31,7 @@
 .pub-cache/
 .pub/
 /build/
+.flutter-plugins-dependencies
 
 # Android related
 **/android/**/gradle-wrapper.jar

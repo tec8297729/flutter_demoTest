@@ -1,18 +1,41 @@
 import 'dart:convert';
-import 'dart:io';
-
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'dioErrorUtil.dart';
+import '../../config/app_config.dart';
+import 'interceptors/header_interceptor.dart';
+import 'interceptors/log_interceptor.dart';
 
-String handleBaseUrl() {
-  // 环境处理请求前缀...
-  return '/';
-}
-
-Future safeRequest(String url, {Object data, Options options}) async {
+/// 底层请求方法说明
+///
+/// [options] dio请求的配置参数，默认get请求
+///
+/// [data] 请求参数
+///
+/// [cancelToken] 请求取消对象
+///
+///```dart
+///CancelToken token = CancelToken(); // 通过CancelToken来取消发起的请求
+///
+///safeRequest(
+///  "/test",
+///  data: {"id": 12, "name": "xx"},
+///  options: Options(method: "POST"),
+/// cancelToken: token,
+///);
+///
+///// 取消请求
+///token.cancel("cancelled");
+///```
+Future safeRequest(
+  String url, {
+  Object data,
+  Options options,
+  Map<String, dynamic> queryParameters,
+  CancelToken cancelToken,
+}) async {
   try {
     BaseOptions baseOpts = new BaseOptions(
-      baseUrl: handleBaseUrl(), // 请求前缀url
+      baseUrl: AppConfig.host, // 前缀url
       // connectTimeout: 5000, // 连接服务器超时时间，单位是毫秒
       // receiveTimeout: 3000, // 接收数据的最长时限
       responseType: ResponseType.plain, // 数据类型
@@ -22,29 +45,31 @@ Future safeRequest(String url, {Object data, Options options}) async {
       receiveDataWhenStatusError: true,
     );
 
-    Dio dio = new Dio(baseOpts); // 实例化请求，可以传入options参数
+    Dio dioClient = new Dio(baseOpts); // 实例化请求，可以传入options参数
+    if (AppConfig.usingProxy) {
+      final adapter = dioClient.httpClientAdapter as DefaultHttpClientAdapter;
+      adapter.onHttpClientCreate = (client) {
+        // 设置Http代理
+        client.findProxy = (uri) {
+          return "PROXY ${AppConfig.proxyAddress}:${AppConfig.proxyPort}'";
+        };
+        // https证书校验
+        client.badCertificateCallback = (cert, host, port) => true;
+      };
+    }
 
-    dio.interceptors.add(InterceptorsWrapper(
-      // 请求拦截
-      onRequest: (RequestOptions options) async {
-        return options; //continue
-      },
-      // 响应拦截
-      onResponse: (Response response) async {
-        return response; // continue
-      },
-      // 当请求失败时做一些预处理
-      onError: (DioError e) async {
-        throw HttpException(DioErrorUtil.handleError(e));
-        // return DioErrorUtil.handleError(e);
-      },
-    ));
+    dioClient.interceptors.addAll([
+      new HeaderInterceptors(),
+      new LogsInterceptors(),
+    ]);
 
-    return dio
+    return dioClient
         .request(
           url,
           data: data,
+          queryParameters: queryParameters,
           options: options,
+          cancelToken: cancelToken,
         )
         .then((data) => jsonDecode(data.data));
   } catch (e) {

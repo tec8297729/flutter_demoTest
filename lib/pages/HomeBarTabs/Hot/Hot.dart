@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'package:flexible/model/counterStore/counterStore.dart';
-import 'package:flexible/routes/routerName.dart';
+import '../../../utils/util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 class Hot extends StatefulWidget {
   Hot({Key key, this.params}) : super(key: key);
@@ -13,35 +9,24 @@ class Hot extends StatefulWidget {
   _HotState createState() => _HotState();
 }
 
-class _HotState extends State<Hot> {
-  CounterStore _counter;
-  Timer _timer;
+class _HotState extends State<Hot> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();
-    print(widget.params);
-  }
-
-  void _incrementCounter() {
-    _counter.increment(); // mobx中的值 加加value
-
-    try {
-      _timer = Timer(Duration(seconds: 3), () {
-        print('定时器');
-        Navigator.pushNamed(context, RouterName.home, arguments: {'pageId': 5});
-      });
-    } catch (e) {}
+    LogUtil.d(widget.params);
   }
 
   @override
   void dispose() {
-    _timer = null;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _counter = Provider.of<CounterStore>(context);
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('hot页面'),
@@ -54,25 +39,14 @@ class _HotState extends State<Hot> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'mobx共享值(hot)',
+                  'hot页面',
                   style: TextStyle(fontSize: 32),
                 ),
-                Observer(
-                  builder: (_) => Text(
-                    '${_counter.value}',
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                )
               ],
             ),
           );
         }),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.import_contacts),
-      ), //
     );
   }
 }

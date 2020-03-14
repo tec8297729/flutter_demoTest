@@ -1,18 +1,23 @@
-import 'package:flexible/config/themes/index_theme.dart';
-import 'package:flexible/model/themeStore/themeStore.dart';
 import 'package:flutter/material.dart';
+import 'package:jh_debug/jh_debug.dart';
 import 'package:provider/provider.dart';
+import '../../../provider/themeStore.p.dart';
+import '../../../config/themes/index_theme.dart';
 
 class MyPersonal extends StatefulWidget {
   @override
   _MyPersonalState createState() => _MyPersonalState();
 }
 
-class _MyPersonalState extends State<MyPersonal> {
+class _MyPersonalState extends State<MyPersonal>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   ThemeStore _theme;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     _theme = Provider.of<ThemeStore>(context);
 
     return Scaffold(
@@ -25,51 +30,36 @@ class _MyPersonalState extends State<MyPersonal> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              '全局主题色切换',
-              style: TextStyle(fontSize: 30),
-            ),
-            RaisedButton(
-              child: Text(
-                '切换粉色主题',
-                style: TextStyle(fontSize: 22, color: Colors.white70),
-              ),
-              color: Colors.pink,
-              onPressed: () {
-                switchTheme(themePink);
-              },
-            ),
-            RaisedButton(
-              child: Text(
-                '切换蓝灰主题',
-                style: TextStyle(fontSize: 22, color: Colors.white70),
-              ),
-              color: Colors.blueGrey,
-              onPressed: () {
-                switchTheme(themeBlueGrey);
-              },
-            ),
-            RaisedButton(
-              child: Text(
-                '切换天空蓝主题',
-                style: TextStyle(fontSize: 22, color: Colors.white70),
-              ),
-              color: Colors.lightBlue,
-              onPressed: () {
-                switchTheme(themeLightBlue);
-              },
-            ),
+            Text('全局主题色切换', style: TextStyle(fontSize: 30)),
+            btnWidget('切换粉色主题', themePink, Colors.pink),
+            btnWidget('切换蓝灰主题', themeBlueGrey, Colors.blueGrey),
+            btnWidget('切换天空蓝主题', themeLightBlue, Colors.lightBlue),
+            btnWidget(
+                '暗模式', ThemeData.dark(), ThemeData.dark().backgroundColor),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        heroTag: 'myPerBtn1',
+        onPressed: () {
+          jhDebug.showDebugBtn(); // 全局显示调试按钮
+        },
+        tooltip: '显示全局浮动调试按钮',
         child: Icon(Icons.import_contacts),
       ), //
     );
   }
 
-  switchTheme(ThemeData themeData) {
-    _theme.setTheme(themeData);
+  btnWidget(String title, ThemeData themeData, Color color) {
+    return RaisedButton(
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 22, color: Colors.white70),
+      ),
+      color: color,
+      onPressed: () {
+        _theme.setTheme(themeData);
+      },
+    );
   }
 }

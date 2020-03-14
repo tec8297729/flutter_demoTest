@@ -1,13 +1,11 @@
+import 'package:flexible/pages/HomeBarTabs/Search/components/MyAppBar/MyAppBar.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Search页面'),
-        automaticallyImplyLeading: false,
-      ),
+      appBar: MyAppBar(),
       body: Container(
         color: Colors.green,
         width: double.infinity,
